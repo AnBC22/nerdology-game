@@ -47,3 +47,10 @@ article ul {
   [type=checkbox] {
       cursor: pointer;
   }
+
+  /* */
+
+  body {
+    background-color: #141414;
+    color: whitesmoke;
+  }
