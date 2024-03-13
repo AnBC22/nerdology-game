@@ -1,11 +1,13 @@
 import React from 'react'
 // import './App.css'
 
-export default function StartPage() {
+export default function StartPage({handleStartGame}) {
 
   return (
     <>
-        <h2>This is the start page</h2>
+      <h1>Nerdology</h1>
+      <p>Test if you're a knowledge bot!</p>
+      <button onClick={handleStartGame}>Start game</button>
     </>
   )
 }
