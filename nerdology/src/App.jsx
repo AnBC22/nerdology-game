@@ -1,12 +1,13 @@
 import React from 'react'
 import './App.css'
 import StartPage from './pages/StartPage'
-const questionsURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
+import Quiz from './pages/Quiz'
+const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 
 function App() {
 
   const [ startGame, setStartGame ] = React.useState(false)
-  const [ questionsData, setQuestionsData ] = React.useState(null)
+  const [ triviaData, setTriviaData ] = React.useState(null)
 
   function handleStartGame() {
     console.log('Game started')
@@ -15,17 +16,34 @@ function App() {
 
   React.useEffect(() => {
     async function getQuestionsData() {
-      const response = await fetch(questionsURL)
-      const data = await response.json()
-      setQuestionsData(data)
+
+      try {
+        const response = await fetch(triviaURL)
+        if(!response.ok) {
+          throw new Error('Network response failed')
+        }
+        const data = await response.json()
+        setTriviaData(data)
+      }
+
+      catch(error) {
+        console.error('Error fetching trivia data:', error.message)
+        alert("There was an error fetching data for the quiz")
+      }
+
     }
+
     getQuestionsData()
   }, [])
 
 
   return (
     <>
-      { startGame ? <h2>Questions showing</h2> : <StartPage handleStartGame={handleStartGame}/>}
+      { 
+        startGame ? 
+        <Quiz triviaData={triviaData} /> : 
+        <StartPage handleStartGame={handleStartGame} />
+      }
     </>
   )
 }
