@@ -4,16 +4,31 @@ import StartPage from './pages/StartPage'
 import Quiz from './pages/Quiz'
 const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 
-let pageLoaded = true
+
 
 function App() {
 
+  let pageLoaded = true
+
   const [ startGame, setStartGame ] = React.useState(false)
   const [ triviaData, setTriviaData ] = React.useState(null)
+  const [ startNewGame, setStartNewGame ] = React.useState(false)
+  const [ waitingTime, setWaitingTime ] = React.useState(false)
 
   function handleStartGame() {
     console.log('Game started')
     setStartGame(prev => !prev)
+  }
+
+  function handleStartNewGame() {
+    setWaitingTime(true)
+    setTimeout(() => {
+      setStartNewGame(prev => !prev)
+    }, 4500)
+
+    setTimeout(() => {
+      setWaitingTime(false)
+    }, 5500)
   }
 
   React.useEffect(() => {
@@ -41,15 +56,18 @@ function App() {
 
     pageLoaded = false
 
-  }, [])
+  }, [startNewGame])
 
 
   return (
     <>
-      { 
-        startGame ? 
-        <Quiz triviaData={triviaData} /> : 
-        <StartPage handleStartGame={handleStartGame} />
+
+      {
+          waitingTime ? 
+          <h2>WaitingTime...</h2>: 
+          startGame ? 
+          <Quiz triviaData={triviaData} handleStartNewGame={handleStartNewGame}/> : 
+          <StartPage handleStartGame={handleStartGame} />
       }
     </>
   )

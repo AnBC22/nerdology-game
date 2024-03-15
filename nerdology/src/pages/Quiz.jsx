@@ -1,16 +1,20 @@
 import React from 'react'
 // import './App.css'
 
-export default function Quiz({triviaData}) {
+export default function Quiz({ triviaData, handleStartNewGame }) {
+
+    const [ checkAnswers, setCheckAnswers ] = React.useState(false)
 
     function insertRandom(array, newElement) {
         const randomIndex = Math.floor(Math.random() * array.length)
-        const newArray = array.toSpliced(randomIndex, 0, newElement)
+        const randomIndexRef = React.useRef(randomIndex)
+        const newArray = array.toSpliced(randomIndexRef, 0, newElement)
         return newArray
     }
 
     function handleShowAnswers() {
         console.log("Show answers")
+        setCheckAnswers(true)
     }
 
     const triviaDataHtml = triviaData.results.map((questionObj, index) => {
@@ -39,7 +43,11 @@ export default function Quiz({triviaData}) {
         <>
             <h2>This is the Quiz</h2>
             {triviaDataHtml}
-            <button onClick={handleShowAnswers}>Check answers</button>
+            {
+                checkAnswers ? 
+                <button onClick={handleStartNewGame}>Play again</button>:
+                <button onClick={handleShowAnswers}>Check answers</button>
+            }
         </>
     )
 }
