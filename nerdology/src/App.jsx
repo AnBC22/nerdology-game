@@ -4,8 +4,6 @@ import StartPage from './pages/StartPage'
 import Quiz from './pages/Quiz'
 const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 
-
-
 function App() {
 
   let pageLoaded = true
