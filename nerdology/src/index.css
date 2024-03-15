@@ -54,3 +54,7 @@ article ul {
     background-color: #141414;
     color: whitesmoke;
   }
+
+  .correct-answer {
+    color: green;
+  }

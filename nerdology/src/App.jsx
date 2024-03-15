@@ -4,6 +4,8 @@ import StartPage from './pages/StartPage'
 import Quiz from './pages/Quiz'
 const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 
+let pageLoaded = true
+
 function App() {
 
   const [ startGame, setStartGame ] = React.useState(false)
@@ -33,7 +35,12 @@ function App() {
 
     }
 
-    getQuestionsData()
+    if(pageLoaded) {
+      getQuestionsData()
+    }
+
+    pageLoaded = false
+
   }, [])
 
 
