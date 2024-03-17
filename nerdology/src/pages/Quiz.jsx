@@ -1,5 +1,7 @@
 import React from 'react'
 import Button from '../components/Button'
+import GameOver from './GameOver'
+
 // import './App.css'
 
 export default function Quiz({ triviaData, handleStartNewGame }) {
