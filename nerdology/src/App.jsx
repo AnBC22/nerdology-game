@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import StartPage from './pages/StartPage'
 import Quiz from './pages/Quiz'
+import WaitingTime from './pages/WaitingTime'
 const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 
 function App() {
@@ -22,11 +23,15 @@ function App() {
     setWaitingTime(true)
     setTimeout(() => {
       setStartNewGame(prev => !prev)
-    }, 4500)
+    }, 4000)
 
     setTimeout(() => {
-      setWaitingTime(false)
-    }, 5500)
+      handleWaitingTime()
+    }, 5100)
+  }
+
+  function handleWaitingTime() {
+    setWaitingTime(false)
   }
 
   React.useEffect(() => {
@@ -62,7 +67,7 @@ function App() {
 
       {
           waitingTime ? 
-          <h2>WaitingTime...</h2>: 
+          <WaitingTime/>: 
           startGame ? 
           <Quiz triviaData={triviaData} handleStartNewGame={handleStartNewGame}/> : 
           <StartPage handleStartGame={handleStartGame} />
