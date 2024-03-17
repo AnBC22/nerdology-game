@@ -20,6 +20,32 @@ export default function Quiz({ triviaData, handleStartNewGame }) {
         setCheckAnswers(true)
     }
 
+
+  const [minutes, setMinutes] = React.useState(1);
+  const [seconds, setSeconds] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setSeconds(prevSeconds => {
+        if (prevSeconds === 0) {
+          // If seconds reach 0, decrease minutes and reset seconds
+          if (minutes === 0) {
+            clearInterval(timer); // Stop the timer when it reaches 0:00
+            return 0;
+          }
+          setMinutes(prevMinutes => prevMinutes - 1);
+          return 59;
+        }
+        return prevSeconds - 1;
+      });
+    }, 1000);
+    // Cleanup function to clear interval when component unmounts
+    return () => clearInterval(timer);
+  }, [minutes]); // Re-run effect only when minutes change
+
+
+
+
     const triviaDataHtml = triviaData.results.map((questionObj, index) => {
 
         const incorrectAnswers = questionObj.incorrect_answers
@@ -45,6 +71,7 @@ export default function Quiz({ triviaData, handleStartNewGame }) {
     return ( //End of Quiz function
         <>
             <h2>This is the Quiz</h2>
+            <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
             {triviaDataHtml}
             {
                 checkAnswers ? 
