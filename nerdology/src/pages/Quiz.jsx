@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '../components/Button'
 // import './App.css'
 
 export default function Quiz({ triviaData, handleStartNewGame }) {
@@ -45,8 +46,21 @@ export default function Quiz({ triviaData, handleStartNewGame }) {
             {triviaDataHtml}
             {
                 checkAnswers ? 
-                <button onClick={handleStartNewGame}>Play again</button>:
-                <button onClick={handleShowAnswers}>Check answers</button>
+                <Button 
+                    buttonAction={handleStartNewGame} 
+                    buttonText={'Play again'}
+                    buttonSize={'small'}
+                >
+                    Play again
+                </Button> :
+
+                <Button 
+                    buttonAction={handleShowAnswers} 
+                    buttonText={'Check Answers'}
+                    buttonSize={'small'}
+                >
+                    Check answers
+                </Button>
             }
         </>
     )

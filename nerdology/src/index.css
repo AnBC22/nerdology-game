@@ -58,3 +58,14 @@ article ul {
   .correct-answer {
     color: green;
   }
+
+  button {
+    background-color: #FF4081;
+    border: none;
+    color: #E0E0E0;
+    border-radius: 4px;
+  }
+
+  .button-small {
+    padding: 6px 12px;
+  }
