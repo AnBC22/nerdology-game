@@ -1,38 +1,17 @@
 import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
+
 import StartPage from './pages/StartPage'
 import Quiz from './pages/Quiz'
 import WaitingTime from './pages/WaitingTime'
+
 const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 
 function App() {
 
-  let pageLoaded = true
-
-  const [ startGame, setStartGame ] = React.useState(false)
   const [ triviaData, setTriviaData ] = React.useState(null)
-  const [ startNewGame, setStartNewGame ] = React.useState(false)
-  const [ waitingTime, setWaitingTime ] = React.useState(false)
-
-  function handleStartGame() {
-    console.log('Game started')
-    setStartGame(prev => !prev)
-  }
-
-  function handleStartNewGame() {
-    setWaitingTime(true)
-    setTimeout(() => {
-      setStartNewGame(prev => !prev)
-    }, 4000)
-
-    setTimeout(() => {
-      handleWaitingTime()
-    }, 5100)
-  }
-
-  function handleWaitingTime() {
-    setWaitingTime(false)
-  }
 
   React.useEffect(() => {
     async function getQuestionsData() {
@@ -53,25 +32,22 @@ function App() {
 
     }
 
-    if(pageLoaded) {
       getQuestionsData()
-    }
 
-    pageLoaded = false
-
-  }, [startNewGame])
+  }, [triviaData])
 
 
   return (
-    <>
-      {
-          waitingTime ? 
-          <WaitingTime/>: 
-          startGame ? 
-          <Quiz triviaData={triviaData} handleStartNewGame={handleStartNewGame}/> : 
-          <StartPage handleStartGame={handleStartGame} />
-      }
-    </>
+    <BrowserRouter>
+      <header>
+        <h3>Some links and info that persists across all pages</h3>
+      </header>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route path="/quiz" element={<Quiz triviaData={triviaData} />} />
+        <Route path="waitingtime" element={<WaitingTime/>} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

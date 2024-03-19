@@ -1,10 +1,11 @@
 import React from 'react'
 import Button from '../components/Button'
 import GameOver from './GameOver'
+import { Link } from "react-router-dom"
 
 // import './App.css'
 
-export default function Quiz({ triviaData, handleStartNewGame }) {
+export default function Quiz({ triviaData }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
 
@@ -19,7 +20,6 @@ export default function Quiz({ triviaData, handleStartNewGame }) {
         console.log("Show answers")
         setCheckAnswers(true)
     }
-
 
   const [minutes, setMinutes] = React.useState(1);
   const [seconds, setSeconds] = React.useState(0);
@@ -38,12 +38,10 @@ export default function Quiz({ triviaData, handleStartNewGame }) {
         }
         return prevSeconds - 1;
       });
-    }, 1000);
+    }, 50);
     // Cleanup function to clear interval when component unmounts
     return () => clearInterval(timer);
   }, [minutes]); // Re-run effect only when minutes change
-
-
 
 
     const triviaDataHtml = triviaData.results.map((questionObj, index) => {
@@ -74,14 +72,17 @@ export default function Quiz({ triviaData, handleStartNewGame }) {
             <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
             {triviaDataHtml}
             {
-                checkAnswers ? 
-                <Button 
-                    buttonAction={handleStartNewGame} 
-                    buttonText={'Play again'}
-                    buttonSize={'small'}
-                >
-                    Play again
-                </Button> :
+                checkAnswers ?
+                <Link to='/waitingtime'>
+                    <Button 
+                        buttonAction={null} 
+                        buttonText={'Play again'}
+                        buttonSize={'small'}
+                    >
+                        Play again
+                    </Button> 
+                </Link> 
+                :
 
                 <Button 
                     buttonAction={handleShowAnswers} 

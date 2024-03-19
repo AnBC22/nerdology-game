@@ -1,5 +1,5 @@
 import React from 'react'
-// import './App.css'
+import { Link } from "react-router-dom"
 
 export default function StartPage({handleStartGame}) {
 
@@ -7,7 +7,9 @@ export default function StartPage({handleStartGame}) {
     <>
       <h1>Nerdology</h1>
       <p>Test if you're a knowledge bot!</p>
-      <button onClick={handleStartGame}>Start game</button>
+      <Link to='/quiz'>
+        <button onClick={handleStartGame}>Start game</button>
+      </Link>
     </>
   )
 }
