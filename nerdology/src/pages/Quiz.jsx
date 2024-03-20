@@ -51,7 +51,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
 
         const allAnswersHtml = allAnswers.map(answer => {
             return (
-                <p>{answer}</p>
+                <button className="answer-button">{answer}</button>
             )
         })
 
@@ -60,7 +60,9 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                 <h2>
                     {questionObj.question}
                 </h2>
-                {allAnswersHtml}
+                <div className="answer-buttons-container">
+                    {allAnswersHtml}
+                </div>
             </div>
         )
     })
