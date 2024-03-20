@@ -9,9 +9,17 @@ import WaitingTime from './pages/WaitingTime'
 
 const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 
+let pageLoaded = true
+
 function App() {
 
   const [ triviaData, setTriviaData ] = React.useState(null)
+  const [ newRequest, setNewRequest ] = React.useState(false)
+
+
+  function handleNewRequest() {
+    setNewRequest(true)
+  }
 
   React.useEffect(() => {
     async function getQuestionsData() {
@@ -32,9 +40,26 @@ function App() {
 
     }
 
-      getQuestionsData()
+      console.log(`newRequest is: ${newRequest}`)
 
-  }, [triviaData])
+
+      if(pageLoaded && !newRequest) {
+        getQuestionsData()
+      } 
+      else if(newRequest) {
+        const myInterval = setTimeout(() => {
+          getQuestionsData()
+          setNewRequest(false)
+        }, 5050)
+
+        return () => {
+          clearTimeout(myInterval)
+        }
+      }
+
+      pageLoaded = false
+
+  }, [triviaData, newRequest])
 
 
   return (
@@ -44,7 +69,7 @@ function App() {
       </header>
       <Routes>
         <Route path="/" element={<StartPage />} />
-        <Route path="/quiz" element={<Quiz triviaData={triviaData} />} />
+        <Route path="/quiz" element={<Quiz triviaData={triviaData} handleNewRequest={handleNewRequest}/>} />
         <Route path="waitingtime" element={<WaitingTime/>} />
       </Routes>
     </BrowserRouter>

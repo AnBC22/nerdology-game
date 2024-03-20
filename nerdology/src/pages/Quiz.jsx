@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 // import './App.css'
 
-export default function Quiz({ triviaData }) {
+export default function Quiz({ triviaData, handleNewRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
 
@@ -75,7 +75,7 @@ export default function Quiz({ triviaData }) {
                 checkAnswers ?
                 <Link to='/waitingtime'>
                     <Button 
-                        buttonAction={null} 
+                        buttonAction={handleNewRequest} 
                         buttonText={'Play again'}
                         buttonSize={'small'}
                     >
