@@ -1,11 +1,10 @@
 import React from 'react'
 import Button from '../components/Button'
-import GameOver from './GameOver'
 import { Link } from "react-router-dom"
 
 // import './App.css'
 
-export default function Quiz({ triviaData, handleNewRequest }) {
+export default function Quiz({ triviaData, handleNewDataRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
 
@@ -75,7 +74,7 @@ export default function Quiz({ triviaData, handleNewRequest }) {
                 checkAnswers ?
                 <Link to='/waitingtime'>
                     <Button 
-                        buttonAction={handleNewRequest} 
+                        buttonAction={handleNewDataRequest} 
                         buttonText={'Play again'}
                         buttonSize={'small'}
                     >

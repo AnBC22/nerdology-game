@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 
 import StartPage from './pages/StartPage'
@@ -16,8 +16,7 @@ function App() {
   const [ triviaData, setTriviaData ] = React.useState(null)
   const [ newRequest, setNewRequest ] = React.useState(false)
 
-
-  function handleNewRequest() {
+  function handleNewDataRequest() {
     setNewRequest(true)
   }
 
@@ -50,7 +49,7 @@ function App() {
         const myInterval = setTimeout(() => {
           getQuestionsData()
           setNewRequest(false)
-        }, 5050)
+        }, 4000)
 
         return () => {
           clearTimeout(myInterval)
@@ -65,11 +64,11 @@ function App() {
   return (
     <BrowserRouter>
       <header>
-        <h3>Some links and info that persists across all pages</h3>
+        <h3>Some links and additional info go here</h3>
       </header>
       <Routes>
         <Route path="/" element={<StartPage />} />
-        <Route path="/quiz" element={<Quiz triviaData={triviaData} handleNewRequest={handleNewRequest}/>} />
+        <Route path="/quiz" element={<Quiz triviaData={triviaData} handleNewDataRequest={handleNewDataRequest}/>} />
         <Route path="waitingtime" element={<WaitingTime/>} />
       </Routes>
     </BrowserRouter>
