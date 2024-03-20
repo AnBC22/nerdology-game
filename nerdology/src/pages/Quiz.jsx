@@ -77,7 +77,6 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                 <Link to='/waitingtime'>
                     <Button 
                         buttonAction={handleNewDataRequest} 
-                        buttonText={'Play again'}
                         buttonSize={'small'}
                     >
                         Play again
@@ -87,7 +86,6 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
 
                 <Button 
                     buttonAction={handleShowAnswers} 
-                    buttonText={'Check Answers'}
                     buttonSize={'small'}
                 >
                     Check answers
