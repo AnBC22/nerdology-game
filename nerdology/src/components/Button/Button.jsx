@@ -1,11 +1,11 @@
 import React from 'react'
-// import './App.css'
+import './Button.css'
 
 export default function Button({children, buttonAction, buttonSize}) {
 
   return (
     <>
-        <button className={`button-${buttonSize}`} onClick={buttonAction}>
+        <button className={`action-button button-${buttonSize}`} onClick={buttonAction}>
             {children}
         </button>
     </>
