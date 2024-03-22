@@ -1,29 +1,40 @@
 import React from 'react'
 import Button from '../components/Button/Button'
 import { Link } from "react-router-dom"
+import { set } from 'lodash'
 
 // import './App.css'
 
 export default function Quiz({ triviaData, handleNewDataRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
+    const [ numberOfCorrectAnswers, setNumberOfCorrectAnswers ] = React.useState(0)
+
+
+    //Remember, the idea in this branch is that the user is only able to select one answer per question.
+
+    function handleCorrectAnswerSelected() {
+        setNumberOfCorrectAnswers(prevAnswers => prevAnswers + 1)
+    }
+
+    console.log("Number of correct answers: ", numberOfCorrectAnswers)
 
     function insertRandom(array, newElement) {
 
         const incorrectAnswersHtml = array.map(incorrectAnswer => {
             return (
-                <button className="incorrect-answer">{incorrectAnswer}</button>
+                <button className="answer-button">{incorrectAnswer}</button>
             )
         })
 
-        console.log(incorrectAnswersHtml)
-
-        const correctAnswerHtml = <button className="correct-answer">{newElement}</button>
+        const correctAnswerHtml = <button onClick={handleCorrectAnswerSelected} className=" correct-answer answer-button">{newElement}</button>
         const randomIndex = Math.floor(Math.random() * (incorrectAnswersHtml.length + 1))
         const randomIndexRef = React.useRef(randomIndex)
         const newArray = incorrectAnswersHtml.toSpliced(randomIndexRef.current, 0, correctAnswerHtml)
         return newArray
     }
+
+
 
     function handleShowAnswers() {
         console.log("Show answers")
