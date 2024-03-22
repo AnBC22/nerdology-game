@@ -9,9 +9,19 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
 
     function insertRandom(array, newElement) {
-        const randomIndex = Math.floor(Math.random() * array.length)
+
+        const incorrectAnswersHtml = array.map(incorrectAnswer => {
+            return (
+                <button className="incorrect-answer">{incorrectAnswer}</button>
+            )
+        })
+
+        console.log(incorrectAnswersHtml)
+
+        const correctAnswerHtml = <button className="correct-answer">{newElement}</button>
+        const randomIndex = Math.floor(Math.random() * (incorrectAnswersHtml.length + 1))
         const randomIndexRef = React.useRef(randomIndex)
-        const newArray = array.toSpliced(randomIndexRef, 0, newElement)
+        const newArray = incorrectAnswersHtml.toSpliced(randomIndexRef.current, 0, correctAnswerHtml)
         return newArray
     }
 
@@ -49,11 +59,13 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         
         const allAnswers = insertRandom(incorrectAnswers, questionObj.correct_answer)
 
+        /*
         const allAnswersHtml = allAnswers.map(answer => {
             return (
                 <button className="answer-button">{answer}</button>
             )
         })
+        */
 
         return ( //End of triviaDataHtml
             <div key={index}>
@@ -61,7 +73,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                     {questionObj.question}
                 </h2>
                 <div className="answer-buttons-container">
-                    {allAnswersHtml}
+                    {allAnswers}
                 </div>
             </div>
         )

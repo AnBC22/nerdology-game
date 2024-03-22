@@ -70,7 +70,11 @@ article ul {
     gap: 10px;
   }
 
-  .answer-button {
+  .incorrect-answer {
     background-color: purple;
   }
 
+  .correct-answer {
+    background-color: green;
+    color: whitesmoke
+  }
