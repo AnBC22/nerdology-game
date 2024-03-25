@@ -17,17 +17,30 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         setNumberOfCorrectAnswers(prevAnswers => prevAnswers + 1)
     }
 
-    console.log("Number of correct answers: ", numberOfCorrectAnswers)
+    const styles = {
+        backgroundColor: '#0047AB'
+    }
+
+    function handleClickedAnswer(responseValidity) {
+        if(responseValidity === 'correct') {
+            console.log('Congratulations')
+        } else {
+            console.log('Wrong answer')
+        }
+
+
+
+    }
 
     function insertRandom(array, newElement) {
 
         const incorrectAnswersHtml = array.map(incorrectAnswer => {
             return (
-                <button className="answer-button">{incorrectAnswer}</button>
+                <button onClick={() => handleClickedAnswer('incorrect')} className="answer-button">{incorrectAnswer}</button>
             )
         })
 
-        const correctAnswerHtml = <button onClick={handleCorrectAnswerSelected} className=" correct-answer answer-button">{newElement}</button>
+        const correctAnswerHtml = <button onClick={() => handleClickedAnswer('correct')} className=" correct-answer answer-button">{newElement}</button>
         const randomIndex = Math.floor(Math.random() * (incorrectAnswersHtml.length + 1))
         const randomIndexRef = React.useRef(randomIndex)
         const newArray = incorrectAnswersHtml.toSpliced(randomIndexRef.current, 0, correctAnswerHtml)
@@ -40,6 +53,9 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         console.log("Show answers")
         setCheckAnswers(true)
     }
+
+    
+    
 
   const [minutes, setMinutes] = React.useState(1);
   const [seconds, setSeconds] = React.useState(0);

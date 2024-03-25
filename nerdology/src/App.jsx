@@ -38,10 +38,6 @@ function App() {
       }
 
     }
-
-      console.log(`newRequest is: ${newRequest}`)
-
-
       if(pageLoaded && !newRequest) {
         getQuestionsData()
       } 
@@ -60,7 +56,6 @@ function App() {
 
   }, [triviaData, newRequest])
 
-
   return (
     <BrowserRouter>
       <header>
@@ -68,7 +63,7 @@ function App() {
       </header>
       <Routes>
         <Route path="/" element={<StartPage />} />
-        <Route path="/quiz" element={<Quiz triviaData={triviaData} handleNewDataRequest={handleNewDataRequest}/>} />
+        <Route path="/quiz" element={<Quiz triviaData={triviaData} handleNewDataRequest={handleNewDataRequest} />} />
         <Route path="waitingtime" element={<WaitingTime/>} />
       </Routes>
     </BrowserRouter>
