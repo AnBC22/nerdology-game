@@ -26,7 +26,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
     }
 
     function insertRandom(array, newElement) {
-        const incorrectAnswersHtml = array.map(incorrectAnswer => {
+        const incorrectAnswersHtml = array.map((incorrectAnswer, incorrectAnswerIndex) => {
 
             return (
                 <AnswerButton
@@ -44,9 +44,9 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                 {newElement}
             </AnswerButton>
         )
-        const randomIndex = Math.floor(Math.random() * (incorrectAnswersHtml.length + 1))
-        const randomIndexRef = React.useRef(randomIndex)
-        const newArray = incorrectAnswersHtml.toSpliced(randomIndexRef.current, 0, correctAnswerHtml)
+        const randomquestionIndex = Math.floor(Math.random() * (incorrectAnswersHtml.length + 1))
+        const randomquestionIndexRef = React.useRef(randomquestionIndex)
+        const newArray = incorrectAnswersHtml.toSpliced(randomquestionIndexRef.current, 0, correctAnswerHtml)
         return newArray
     }
 
@@ -83,7 +83,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
   }, [minutes]); // Re-run effect only when minutes change
 
 
-    const triviaDataHtml = triviaData.results.map((questionObj, index) => {
+    const triviaDataHtml = triviaData.results.map((questionObj, questionIndex) => {
 
         const incorrectAnswers = questionObj.incorrect_answers
         
@@ -98,7 +98,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         */
 
         return ( //End of triviaDataHtml
-            <div key={index}>
+            <div key={questionIndex}>
                 <h2>
                     {questionObj.question}
                 </h2>
