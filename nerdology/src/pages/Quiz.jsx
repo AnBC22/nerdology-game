@@ -26,7 +26,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
     }
 
     function insertRandom(array, newElement) {
-        const incorrectAnswersHtml = array.map((incorrectAnswer, incorrectAnswerIndex) => {
+        const incorrectAnswers = array.map((incorrectAnswer, incorrectAnswerIndex) => {
             return (
                 <AnswerButton
                     key={incorrectAnswerIndex}
@@ -37,7 +37,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
             )
         })
 
-        const correctAnswerHtml = (
+        const correctAnswer = (
             <AnswerButton
                 key={3}
                 clicked={() => handleClickedAnswer('correct')}
@@ -45,11 +45,9 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                 {newElement}
             </AnswerButton>
         )
-        const randomquestionIndex = Math.floor(Math.random() * (incorrectAnswersHtml.length + 1))
+        const randomquestionIndex = Math.floor(Math.random() * (incorrectAnswers.length + 1))
         const randomquestionIndexRef = React.useRef(randomquestionIndex)
-        const newArray = incorrectAnswersHtml.toSpliced(randomquestionIndexRef.current, 0, correctAnswerHtml)
-        console.log("This is newArray: ")
-        console.log(newArray)
+        const newArray = incorrectAnswers.toSpliced(randomquestionIndexRef.current, 0, correctAnswer)
         return newArray
     }
 
