@@ -25,7 +25,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         }
     }
 
-    function insertRandom(array, newElement) {
+    function getCombinedAnswersArray(array, newElement) {
         const incorrectAnswers = array.map((incorrectAnswer, incorrectAnswerIndex) => {
             return (
                 <AnswerButton
@@ -47,8 +47,8 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         )
         const randomquestionIndex = Math.floor(Math.random() * (incorrectAnswers.length + 1))
         const randomquestionIndexRef = React.useRef(randomquestionIndex)
-        const newArray = incorrectAnswers.toSpliced(randomquestionIndexRef.current, 0, correctAnswer)
-        return newArray
+        const combinedAnswersArray = incorrectAnswers.toSpliced(randomquestionIndexRef.current, 0, correctAnswer)
+        return combinedAnswersArray
     }
 
 
@@ -88,7 +88,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
 
         const incorrectAnswers = questionObj.incorrect_answers
         
-        const allAnswers = insertRandom(incorrectAnswers, questionObj.correct_answer)
+        const allAnswers = getCombinedAnswersArray(incorrectAnswers, questionObj.correct_answer)
 
         /*
         const allAnswersHtml = allAnswers.map(answer => {
