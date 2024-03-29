@@ -2,8 +2,7 @@ import React from 'react'
 import Button from '../components/Button/Button'
 import { Link } from "react-router-dom"
 import { set } from 'lodash'
-
-// import './App.css'
+import AnswerButton from '../components/AnswerButton/AnswerButton'
 
 export default function Quiz({ triviaData, handleNewDataRequest }) {
 
@@ -17,9 +16,6 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         setNumberOfCorrectAnswers(prevAnswers => prevAnswers + 1)
     }
 
-    const styles = {
-        backgroundColor: '#0047AB'
-    }
 
     function handleClickedAnswer(responseValidity) {
         if(responseValidity === 'correct') {
@@ -27,20 +23,27 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         } else {
             console.log('Wrong answer')
         }
-
-
-
     }
 
     function insertRandom(array, newElement) {
-
         const incorrectAnswersHtml = array.map(incorrectAnswer => {
+
             return (
-                <button onClick={() => handleClickedAnswer('incorrect')} className="answer-button">{incorrectAnswer}</button>
+                <AnswerButton
+                    clicked={() => handleClickedAnswer('incorrect')}
+                >
+                    {incorrectAnswer}
+                </AnswerButton>
             )
         })
 
-        const correctAnswerHtml = <button onClick={() => handleClickedAnswer('correct')} className=" correct-answer answer-button">{newElement}</button>
+        const correctAnswerHtml = (
+            <AnswerButton
+                clicked={() => handleClickedAnswer('correct')}
+            >
+                {newElement}
+            </AnswerButton>
+        )
         const randomIndex = Math.floor(Math.random() * (incorrectAnswersHtml.length + 1))
         const randomIndexRef = React.useRef(randomIndex)
         const newArray = incorrectAnswersHtml.toSpliced(randomIndexRef.current, 0, correctAnswerHtml)
