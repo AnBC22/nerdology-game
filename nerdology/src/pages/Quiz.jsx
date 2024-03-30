@@ -8,9 +8,11 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
     
     const triviaDataHtml = triviaData.results.map((questionObj, questionIndex) => {
-        const incorrectAnswers = questionObj.incorrect_answers
 
-        const allAnswers = getCombinedAnswersArray(incorrectAnswers, questionObj.correct_answer)
+        const incorrectAnswers = questionObj.incorrect_answers
+        const correctAnswer = questionObj.correct_answer
+
+        const answerButtonComponents = getAnswerButtonComponents(incorrectAnswers, correctAnswer)
 
         return (
             <div key={questionIndex}>
@@ -18,13 +20,13 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                     {questionObj.question}
                 </h2>
                 <div className="answer-buttons-container">
-                    {allAnswers}
+                    {answerButtonComponents}
                 </div>
             </div>
         )
     })
 
-    function getCombinedAnswersArray(array, newElement) {
+    function getAnswerButtonComponents(array, element) {
         const incorrectAnswers = array.map((incorrectAnswer, incorrectAnswerIndex) => {
             return (
                 <AnswerButton
@@ -41,13 +43,18 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                 key={3}
                 clicked={() => handleClickedAnswer(true)}
             >
-                {newElement}
+                {element}
             </AnswerButton>
         )
-        const randomquestionIndex = Math.floor(Math.random() * (incorrectAnswers.length + 1))
+
+        return getCombinedComponents(incorrectAnswers, correctAnswer)
+    }
+
+    function getCombinedComponents(array, element) {
+        const randomquestionIndex = Math.floor(Math.random() * (array.length + 1))
         const randomquestionIndexRef = React.useRef(randomquestionIndex)
-        const combinedAnswersArray = incorrectAnswers.toSpliced(randomquestionIndexRef.current, 0, correctAnswer)
-        return combinedAnswersArray
+        const combinedComponents = array.toSpliced(randomquestionIndexRef.current, 0, element)
+        return combinedComponents
     }
 
     function handleClickedAnswer(isCorrect) {

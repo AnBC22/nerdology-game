@@ -29,7 +29,7 @@ function App() {
           throw new Error('Network response failed')
         }
         const data = await response.json()
-        setTriviaData(data)
+        setTriviaData(data) //**** I may need to add an 'on' property here *****
       }
 
       catch(error) {
