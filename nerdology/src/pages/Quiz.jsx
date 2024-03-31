@@ -6,13 +6,46 @@ import AnswerButton from '../components/AnswerButton/AnswerButton'
 export default function Quiz({ triviaData, handleNewDataRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
-    
+    const [ shuffledAnswers, setShuffledAnswers ] = React.useState([])
+
+
+    React.useEffect(() => {
+        if(!triviaData || !triviaData.results) return;
+
+        //Shuffle answers only when triviaData changes
+        const newShuffledAnswers = triviaData.results.map(questionObj => {
+            const incorrectAnswers = questionObj.incorrect_answers
+            const correctAnswer = questionObj.correct_answer
+            const completeArray = [...incorrectAnswers, correctAnswer]
+            return getShuffledArray(completeArray)
+        })
+
+        setShuffledAnswers(newShuffledAnswers)
+
+    }, [triviaData])
+
+
+    function getShuffledArray(array) {
+
+        for(let i = array.length - 1; i > 0; i--) {
+
+            const randomIndex = Math.floor(Math.random() * (i + 1));
+            [array[i], array[randomIndex]] = [array[randomIndex], array[i]]
+        }
+        console.log("********* Shuffled Array of answers is: *********")
+        console.log(array)
+        return array
+    }
+
     const triviaDataHtml = triviaData.results.map((questionObj, questionIndex) => {
-
-        const incorrectAnswers = questionObj.incorrect_answers
-        const correctAnswer = questionObj.correct_answer
-
-        const answerButtonComponents = getAnswerButtonComponents(incorrectAnswers, correctAnswer)
+        const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answer, index) => (
+            <AnswerButton
+                key={index}
+                clicked={() => handleClickedAnswer(answer === questionObj.correct_answer)}
+            >
+                {answer}
+            </AnswerButton>
+        ))
 
         return (
             <div key={questionIndex}>
@@ -26,37 +59,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         )
     })
 
-    function getAnswerButtonComponents(array, element) {
-        const incorrectAnswers = array.map((incorrectAnswer, incorrectAnswerIndex) => {
-            return (
-                <AnswerButton
-                    key={incorrectAnswerIndex}
-                    clicked={() => handleClickedAnswer(false)}
-                >
-                    {incorrectAnswer}
-                </AnswerButton>
-            )
-        })
-
-        const correctAnswer = (
-            <AnswerButton
-                key={3}
-                clicked={() => handleClickedAnswer(true)}
-            >
-                {element}
-            </AnswerButton>
-        )
-
-        return getCombinedComponents(incorrectAnswers, correctAnswer)
-    }
-
-    function getCombinedComponents(array, element) {
-        const randomquestionIndex = Math.floor(Math.random() * (array.length + 1))
-        const randomquestionIndexRef = React.useRef(randomquestionIndex)
-        const combinedComponents = array.toSpliced(randomquestionIndexRef.current, 0, element)
-        return combinedComponents
-    }
-
+    
     function handleClickedAnswer(isCorrect) {
         if(isCorrect) {
             console.log('Congratulations')
