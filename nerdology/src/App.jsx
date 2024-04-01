@@ -29,7 +29,21 @@ function App() {
           throw new Error('Network response failed')
         }
         const data = await response.json()
-        setTriviaData(data) //**** I may need to add an 'on' property here *****
+        const arrayOfQuestions = data.results
+
+        setTriviaData(
+          arrayOfQuestions.map(questionObj => {
+            return {
+              ...questionObj,
+              incorrect_answers: questionObj.incorrect_answers.map((incorrectAnswer, index) => {
+                return {
+                  incorrectAnswer: incorrectAnswer,
+                  id: index
+                }
+              })
+            }
+          })
+        ) 
       }
 
       catch(error) {

@@ -10,11 +10,11 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
 
 
     React.useEffect(() => {
-        if(!triviaData || !triviaData.results) return;
+        if(!triviaData) return;
 
         //Shuffle answers only when triviaData changes
-        const newShuffledAnswers = triviaData.results.map(questionObj => {
-            const incorrectAnswers = questionObj.incorrect_answers
+        const newShuffledAnswers = triviaData.map(questionObj => {
+            const incorrectAnswers = questionObj.incorrect_answers.map(inc_answ => inc_answ.incorrectAnswer)
             const correctAnswer = questionObj.correct_answer
             const completeArray = [...incorrectAnswers, correctAnswer]
             return getShuffledArray(completeArray)
@@ -32,20 +32,21 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
             const randomIndex = Math.floor(Math.random() * (i + 1));
             [array[i], array[randomIndex]] = [array[randomIndex], array[i]]
         }
-        console.log("********* Shuffled Array of answers is: *********")
-        console.log(array)
         return array
     }
 
-    const triviaDataHtml = triviaData.results.map((questionObj, questionIndex) => {
-        const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answer, index) => (
-            <AnswerButton
-                key={index}
-                clicked={() => handleClickedAnswer(answer === questionObj.correct_answer)}
-            >
-                {answer}
-            </AnswerButton>
-        ))
+    const triviaDataHtml = triviaData.map((questionObj, questionIndex) => {
+        const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answer, index) => {
+            return (
+                <AnswerButton
+                    key={index}
+                    clicked={() => handleClickedAnswer(answer === questionObj.correct_answer)}
+                    id={'x'}
+                >
+                    {answer}
+                </AnswerButton>
+            )
+        })
 
         return (
             <div key={questionIndex}>
@@ -60,7 +61,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
     })
 
     
-    function handleClickedAnswer(isCorrect) {
+    function handleClickedAnswer(isCorrect, id) {
         if(isCorrect) {
             console.log('Congratulations')
         } else {
