@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
+import { nanoid } from 'nanoid'
 
 import StartPage from './pages/StartPage'
 import Quiz from './pages/Quiz'
@@ -31,14 +32,28 @@ function App() {
         const data = await response.json()
         const arrayOfQuestions = data.results
 
+        console.log(arrayOfQuestions)
+
+        /**
+         * It seems that a better approach is to modify everything that I need about the fetched questionsdata
+         * here and then pass it to the quiz, exactly as I want it to be (with the complete array of questions already shuffled)
+         * So, I'll have something like this before passing it to quiz: 
+         * 
+         * answers: [{correct_answer: '', id}, {incorrect_answer: '', id}, {}, {}]
+         * 
+         * 
+         * 
+         */
+
         setTriviaData(
           arrayOfQuestions.map(questionObj => {
             return {
               ...questionObj,
-              incorrect_answers: questionObj.incorrect_answers.map((incorrectAnswer, index) => {
+              correct_answer: {correctAnswer: questionObj.correct_answer, id: nanoid()},
+              incorrect_answers: questionObj.incorrect_answers.map((incorrectAnswer) => {
                 return {
                   incorrectAnswer: incorrectAnswer,
-                  id: index
+                  id: nanoid()
                 }
               })
             }

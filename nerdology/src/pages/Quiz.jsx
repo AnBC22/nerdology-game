@@ -11,13 +11,20 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
 
     React.useEffect(() => {
         if(!triviaData) return;
-
+    
         //Shuffle answers only when triviaData changes
         const newShuffledAnswers = triviaData.map(questionObj => {
             const incorrectAnswers = questionObj.incorrect_answers.map(inc_answ => inc_answ.incorrectAnswer)
-            const correctAnswer = questionObj.correct_answer
+            const correctAnswer = questionObj.correct_answer.correctAnswer
             const completeArray = [...incorrectAnswers, correctAnswer]
-            return getShuffledArray(completeArray)
+
+
+
+            const incorrectAnswers2 = questionObj.incorrect_answers
+            const correctAnswer2 = questionObj.correct_answer
+            const completeArray2 = [...incorrectAnswers2, correctAnswer2]
+
+            return getShuffledArray(completeArray2)
         })
 
         setShuffledAnswers(newShuffledAnswers)
@@ -25,7 +32,9 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
     }, [triviaData])
 
 
-    function getShuffledArray(array) {
+    function getShuffledArray(arr) {
+
+        const array = [...arr]
 
         for(let i = array.length - 1; i > 0; i--) {
 
@@ -35,15 +44,17 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         return array
     }
 
+
+
     const triviaDataHtml = triviaData.map((questionObj, questionIndex) => {
-        const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answer, index) => {
+        const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answerObj, index) => {
             return (
                 <AnswerButton
                     key={index}
-                    clicked={() => handleClickedAnswer(answer === questionObj.correct_answer)}
-                    id={'x'}
+                    clicked={() => handleClickedAnswer(answerObj.correctAnswer === questionObj.correct_answer.correctAnswer, answerObj.id)}
+                    id={answerObj.id}
                 >
-                    {answer}
+                    {answerObj.incorrectAnswer ? answerObj.incorrectAnswer : answerObj.correctAnswer}
                 </AnswerButton>
             )
         })
@@ -62,6 +73,13 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
 
     
     function handleClickedAnswer(isCorrect, id) {
+
+        
+
+
+
+        console.log(id)
+
         if(isCorrect) {
             console.log('Congratulations')
         } else {
