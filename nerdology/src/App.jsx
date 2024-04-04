@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
+import { nanoid } from 'nanoid'
 
 import StartPage from './pages/StartPage'
 import Quiz from './pages/Quiz'
@@ -29,6 +30,10 @@ function App() {
           throw new Error('Network response failed')
         }
         const data = await response.json()
+
+        //IT WOULD BE BETTER TO SHUFFLE ALL THE ANSWERS HERE?
+        //AND THEN PASS ALL THE DATA WITH THE IDS AND THE SHUFFLED ANSWERS TO THE QUIZ?
+        //SO THAT I DON'T SHUFFLE ALL THE ANSWERS AGAIN ON THE QUIZ COMPONENT!!!
       
         setTriviaData(data.results.map(questionObj => {
           const incorrectAnswersArray = questionObj.incorrect_answers.map((inc_answ, index) => (
@@ -36,7 +41,7 @@ function App() {
               answer: inc_answ,
               isCorrect: false,
               on: false,
-              id: index
+              id: nanoid()
             }
           ))
 
@@ -49,7 +54,7 @@ function App() {
                   answer: questionObj.correct_answer,
                   isCorrect: true,
                   on: false,
-                  id: 3
+                  id: nanoid()
                 }
               ]
             }

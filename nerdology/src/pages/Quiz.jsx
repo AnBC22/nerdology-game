@@ -7,27 +7,25 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
     const [ shuffledAnswers, setShuffledAnswers ] = React.useState([])
-    const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(null)
+    const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(triviaData)
 
     // console.log(triviaData)
 
     React.useEffect(() => {
-        if(!triviaData) return;
+        if(!updatedTriviaData) return;
 
         // console.log("This is triviaData:")
         // console.log(triviaData)
 
         //Shuffle answers only when triviaData changes
-        const newShuffledAnswers = triviaData.map(questionObj => getShuffledArray(questionObj.answers))
+        const newShuffledAnswers = updatedTriviaData.map(questionObj => getShuffledArray(questionObj.answers))
     
         setShuffledAnswers(newShuffledAnswers)
 
-    }, [triviaData])
+    }, [updatedTriviaData])
 
 
-    function getShuffledArray(arr) {
-
-        const array = [...arr]
+    function getShuffledArray(array) {
 
         for(let i = array.length - 1; i > 0; i--) {
 
@@ -37,74 +35,58 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         return array
     }
 
-    function getTriviaDataHtml() {
+    const triviaDataHtml = updatedTriviaData.map((questionObj, questionIndex) => {
+        const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answerObj, index) => {
 
-        const mapArr = updatedTriviaData ? updatedTriviaData : triviaData
+            const isCorrect = answerObj.isCorrect
+            const id = answerObj.id
+            const on = answerObj.on
 
-        const triviaDataHtml = mapArr.map((questionObj, questionIndex) => {
-            const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answerObj, index) => {
-    
-                const isCorrect = answerObj.isCorrect
-                const id = answerObj.id
-    
-                return (
-                    <AnswerButton
-                        key={index}
-                        clicked={() => handleClickedAnswer(isCorrect, id)}
-                    >
-                        {answerObj.answer}
-                    </AnswerButton>
-                )
-            })
-    
             return (
-                <div key={questionIndex}>
-                    <h2>
-                        {questionObj.question}
-                    </h2>
-                    <div className="answer-buttons-container">
-                        {answerButtonComponents}
-                    </div>
-                </div>
+                <AnswerButton
+                    key={index}
+                    clicked={() => handleClickedAnswer(isCorrect, id)}
+                    on={on}
+                >
+                    {answerObj.answer}
+                </AnswerButton>
             )
         })
 
-        return triviaDataHtml
+        return (
+            <div key={questionIndex}>
+                <h2>
+                    {questionObj.question}
+                </h2>
+                <div className="answer-buttons-container">
+                    {answerButtonComponents}
+                </div>
+            </div>
+        )
+    })
 
-    }
-
-  
     function handleClickedAnswer(isCorrect, id) {
-
         setUpdatedTriviaData(prevData => {
-            if(updatedTriviaData) {
-                return (
-                    prevData.map(questionObj => (
-                        {
-                            ...questionObj,
-                            answers: questionObj.answers.map(answer => {
-                                if(answer.id === id) {
-                                    //THE CURRENT ISSUE IS HERE, WHY AM I NOT ABLE TO HAVE TURNED ON ONLY ONE ANSWER?
-                                    console.log(answer.on)
-                                    return (
-                                        {
-                                            ...answer,
-                                            on: !answer.on
-                                        }
-                                    )
-                                } 
-                                else {
-                                    return answer
+            return prevData.map(questionObj => (
+                {
+                    ...questionObj,
+                    answers: questionObj.answers.map(answer => {
+                        if(answer.id === id) {
+                            console.log(`${answer.answer} was clicked! On is: ${answer.on}`)
+                            console.log()
+                            return (
+                                {
+                                    ...answer,
+                                    on: !answer.on
                                 }
-                            })
+                            )
+                        } 
+                        else {
+                            return answer
                         }
-                    ))
-                )
-            }
-            else {
-                return triviaData
-            }
-        
+                    })
+                }
+            ))    
         })
 
         if(isCorrect) {
@@ -142,15 +124,11 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         return () => clearInterval(timer);
     }, [minutes]); // Re-run effect only when minutes change 
 
-
-    console.log(`UPDATE TRIVIDA DATA IS: `)
-    console.log(updatedTriviaData)
-
     return ( //End of Quiz function
         <>
             <h2>This is the Quiz</h2>
             <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
-            {getTriviaDataHtml()}
+            {triviaDataHtml}
             {
                 checkAnswers ?
                 <Link to='/waitingtime'>
