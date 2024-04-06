@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function AnswerButton({ clicked, children, on }) {
     const styles = {
-        backgroundColor: on ? '#009900' : 'blue'
+        backgroundColor: on ? '#009900' : ''
     }
     
     return (

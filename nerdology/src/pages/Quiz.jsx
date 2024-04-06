@@ -3,41 +3,16 @@ import Button from '../components/Button/Button'
 import { Link } from "react-router-dom"
 import AnswerButton from '../components/AnswerButton/AnswerButton'
 
-export default function Quiz({ triviaData, handleNewDataRequest }) {
+export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
-    const [ shuffledAnswers, setShuffledAnswers ] = React.useState([])
-    const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(triviaData)
-
-    // console.log(triviaData)
-
-    React.useEffect(() => {
-        if(!updatedTriviaData) return;
-
-        // console.log("This is triviaData:")
-        // console.log(triviaData)
-
-        //Shuffle answers only when triviaData changes
-        const newShuffledAnswers = updatedTriviaData.map(questionObj => getShuffledArray(questionObj.answers))
-    
-        setShuffledAnswers(newShuffledAnswers)
-
-    }, [updatedTriviaData])
-
-
-    function getShuffledArray(array) {
-
-        for(let i = array.length - 1; i > 0; i--) {
-
-            const randomIndex = Math.floor(Math.random() * (i + 1));
-            [array[i], array[randomIndex]] = [array[randomIndex], array[i]]
-        }
-        return array
-    }
+    const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(shuffledAnswers)
 
     const triviaDataHtml = updatedTriviaData.map((questionObj, questionIndex) => {
-        const answerButtonComponents = shuffledAnswers[questionIndex]?.map((answerObj, index) => {
 
+        const answerButtonComponents = questionObj.answers.map((answerObj, index) => {
+
+            const currentQuestion = questionObj.question
             const isCorrect = answerObj.isCorrect
             const id = answerObj.id
             const on = answerObj.on
@@ -45,7 +20,7 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
             return (
                 <AnswerButton
                     key={index}
-                    clicked={() => handleClickedAnswer(isCorrect, id)}
+                    clicked={() => handleClickedAnswer(isCorrect, currentQuestion, id)}
                     on={on}
                 >
                     {answerObj.answer}
@@ -62,31 +37,45 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
                     {answerButtonComponents}
                 </div>
             </div>
-        )
+        ) 
+        
     })
 
-    function handleClickedAnswer(isCorrect, id) {
+    function handleClickedAnswer(isCorrect, currentQuestion, id) {
+
         setUpdatedTriviaData(prevData => {
-            return prevData.map(questionObj => (
-                {
-                    ...questionObj,
-                    answers: questionObj.answers.map(answer => {
-                        if(answer.id === id) {
-                            console.log(`${answer.answer} was clicked! On is: ${answer.on}`)
-                            console.log()
-                            return (
-                                {
-                                    ...answer,
-                                    on: !answer.on
+
+            return prevData.map(questionObj => {
+                if(questionObj.question === currentQuestion) {
+                    return (
+                        {
+                            ...questionObj,
+                            answers: questionObj.answers.map(answer => {
+                                if(answer.id === id) {
+                                    console.log(`${answer.answer} was clicked!`)
+                                    return (
+                                        {
+                                            ...answer,
+                                            on: !answer.on
+                                        }
+                                    )
+                                } 
+                                else {
+                                    return (
+                                        {
+                                            ...answer,
+                                            on: false
+                                        }
+                                    )
                                 }
-                            )
-                        } 
-                        else {
-                            return answer
+                            })
                         }
-                    })
+                    )
                 }
-            ))    
+                else {
+                    return questionObj
+                }
+            })
         })
 
         if(isCorrect) {
@@ -101,7 +90,6 @@ export default function Quiz({ triviaData, handleNewDataRequest }) {
         setCheckAnswers(true)
     }
 
-    
     const [minutes, setMinutes] = React.useState(1);
     const [seconds, setSeconds] = React.useState(0);
 

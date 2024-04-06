@@ -13,9 +13,8 @@ const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
 let pageLoaded = true
 
 function App() {
-
-  const [ triviaData, setTriviaData ] = React.useState(null)
   const [ newRequest, setNewRequest ] = React.useState(false)
+  const [ shuffledAnswers, setShuffledAnswers ] = React.useState([])
 
   function handleNewDataRequest() {
     setNewRequest(true)
@@ -29,14 +28,11 @@ function App() {
         if(!response.ok) {
           throw new Error('Network response failed')
         }
+
         const data = await response.json()
 
-        //IT WOULD BE BETTER TO SHUFFLE ALL THE ANSWERS HERE?
-        //AND THEN PASS ALL THE DATA WITH THE IDS AND THE SHUFFLED ANSWERS TO THE QUIZ?
-        //SO THAT I DON'T SHUFFLE ALL THE ANSWERS AGAIN ON THE QUIZ COMPONENT!!!
-      
-        setTriviaData(data.results.map(questionObj => {
-          const incorrectAnswersArray = questionObj.incorrect_answers.map((inc_answ, index) => (
+        const dataWithIDs = data.results.map(questionObj => {
+          const incorrectAnswersArray = questionObj.incorrect_answers.map((inc_answ) => (
             {
               answer: inc_answ,
               isCorrect: false,
@@ -59,8 +55,26 @@ function App() {
               ]
             }
           )
-          
-        })) 
+        })
+
+        setShuffledAnswers(
+          dataWithIDs.map(questionObj => (
+            {
+              ...questionObj,
+              answers: getShuffledArray(questionObj.answers)
+            }
+          ))
+        )
+      
+        function getShuffledArray(array) {
+          for(let i = array.length - 1; i > 0; i--) {
+  
+              const randomIndex = Math.floor(Math.random() * (i + 1));
+              [array[i], array[randomIndex]] = [array[randomIndex], array[i]]
+          }
+          return array
+        }
+
       }
 
       catch(error) {
@@ -85,7 +99,7 @@ function App() {
 
       pageLoaded = false
 
-  }, [triviaData, newRequest])
+  }, [shuffledAnswers, newRequest])
 
   return (
     <BrowserRouter>
@@ -94,7 +108,7 @@ function App() {
       </header>
       <Routes>
         <Route path="/" element={<StartPage />} />
-        <Route path="/quiz" element={<Quiz triviaData={triviaData} handleNewDataRequest={handleNewDataRequest} />} />
+        <Route path="/quiz" element={<Quiz shuffledAnswers={shuffledAnswers} handleNewDataRequest={handleNewDataRequest} />} />
         <Route path="waitingtime" element={<WaitingTime/>} />
       </Routes>
     </BrowserRouter>
