@@ -3,6 +3,12 @@
     margin-top: 2em;
 }
 
+.action-button:disabled {
+    background-color: #FF4081;
+    opacity: 0.6; /* You can adjust the opacity to your preference */
+    cursor: not-allowed;
+  }
+
 .button-small {
     padding: 6px 12px;
 }

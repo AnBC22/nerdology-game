@@ -8,6 +8,8 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
     const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(shuffledAnswers)
 
+    const [ numberAnswers, setNumberAnswers ] = React.useState(0)
+
     const triviaDataHtml = updatedTriviaData.map((questionObj, questionIndex) => {
 
         const answerButtonComponents = questionObj.answers.map((answerObj, index) => {
@@ -40,6 +42,31 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
         ) 
         
     })
+
+
+    React.useEffect(() => {
+        /*
+        What this useEffect does is to enabled the 'checkAnswers' button only when the user 
+        has selected one answer per each question, otherwise it will keep the button disabled. The 
+        useEffect will work only when the updatedTriviaData has changed.
+        */
+
+        /*
+        This map function maps through the updatedTriviaData objects and arrays to find all the 
+        answers that has been clicked
+        */
+        const selectedAnswersArray = updatedTriviaData.map((questionObj) => {
+            return questionObj.answers.map(answerObj => {
+                const isSelectedAnswer = answerObj.on ? true : false
+                return isSelectedAnswer
+            })
+        })
+        .flat()
+        .filter(selectedAnswer => selectedAnswer === true)
+
+        setNumberAnswers(selectedAnswersArray.length)
+        
+    }, [updatedTriviaData])
 
     function handleClickedAnswer(isCorrect, currentQuestion, id) {
 
@@ -112,6 +139,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
         return () => clearInterval(timer);
     }, [minutes]); // Re-run effect only when minutes change 
 
+
     return ( //End of Quiz function
         <>
             <h2>This is the Quiz</h2>
@@ -132,6 +160,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 <Button 
                     buttonAction={handleShowAnswers} 
                     buttonSize={'small'}
+                    buttonState={numberAnswers === 3 ? false : true}
                 >
                     Check answers
                 </Button>
