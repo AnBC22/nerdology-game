@@ -160,7 +160,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 <Button 
                     buttonAction={handleShowAnswers} 
                     buttonSize={'small'}
-                    buttonState={numberAnswers === 3 ? false : true}
+                    buttonState={numberAnswers === updatedTriviaData.length ? false : true}
                 >
                     Check answers
                 </Button>
