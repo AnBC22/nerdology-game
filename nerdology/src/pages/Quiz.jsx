@@ -2,11 +2,13 @@ import React from 'react'
 import Button from '../components/Button/Button'
 import { Link } from "react-router-dom"
 import AnswerButton from '../components/AnswerButton/AnswerButton'
+import GameOver from '../pages/GameOver/GameOver'
 
 export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
     const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(shuffledAnswers)
+    const [ isGameOver, setIsGameOver ] = React.useState(false)
 
     const [ numberAnswers, setNumberAnswers ] = React.useState(0)
 
@@ -24,6 +26,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                     key={index}
                     clicked={() => handleClickedAnswer(isCorrect, currentQuestion, id)}
                     on={on}
+                    buttonState={isGameOver ? true : false}
                 >
                     {answerObj.answer}
                 </AnswerButton>
@@ -126,6 +129,8 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             if (prevSeconds === 0) {
             // If seconds reach 0, decrease minutes and reset seconds
             if (minutes === 0) {
+                console.log(`0 has been reached!`)
+                setIsGameOver(false) // CHANGE THIS TO TRUE WHEN NECESSARY
                 clearInterval(timer); // Stop the timer when it reaches 0:00
                 return 0;
             }
@@ -134,7 +139,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             }
             return prevSeconds - 1;
         });
-        }, 50);
+        }, 30);
         // Cleanup function to clear interval when component unmounts
         return () => clearInterval(timer);
     }, [minutes]); // Re-run effect only when minutes change 
@@ -144,6 +149,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
         <>
             <h2>This is the Quiz</h2>
             <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
+            {isGameOver ? <GameOver/> : ''}
             {triviaDataHtml}
             {
                 checkAnswers ?

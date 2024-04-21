@@ -1,10 +1,16 @@
+button {
+    border: none;
+    color: #E0E0E0;
+    border-radius: 4px;
+  }
+
 .action-button {
-    background-color: #FF4081;
+    background-color: #FF6F00;
+    color: #FFFFFF;
     margin-top: 2em;
 }
 
 .action-button:disabled {
-    background-color: #FF4081;
     opacity: 0.6; /* You can adjust the opacity to your preference */
     cursor: not-allowed;
   }

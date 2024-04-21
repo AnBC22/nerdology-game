@@ -1,11 +1,11 @@
 import React from 'react'
-// import './App.css'
+import './GameOver.css'
 
 export default function GameOver() {
 
   return (
     <>
-      <h2>Game Over!</h2>
+      <h2 className='main-title'>Game Over!</h2>
     </>
   )
 }

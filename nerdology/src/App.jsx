@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 import { nanoid } from 'nanoid'
 
-import StartPage from './pages/StartPage'
+import StartPage from './pages/StartPage/StartPage'
 import Quiz from './pages/Quiz'
 import WaitingTime from './pages/WaitingTime'
 

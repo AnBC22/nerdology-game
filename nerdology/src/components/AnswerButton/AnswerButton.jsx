@@ -1,8 +1,9 @@
 import React from 'react'
+import './AnswerButton.css'
 
-export default function AnswerButton({ clicked, children, on }) {
+export default function AnswerButton({ clicked, children, on, buttonState }) {
     const styles = {
-        backgroundColor: on ? '#009900' : ''
+        backgroundColor: on ? '#1E88E5' : ''
     }
     
     return (
@@ -10,6 +11,7 @@ export default function AnswerButton({ clicked, children, on }) {
             onClick={clicked} 
             className="answer-button"
             style={styles}
+            disabled={buttonState}
         >
             {children}
         </button>
