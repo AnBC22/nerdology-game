@@ -26,7 +26,9 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                     key={index}
                     clicked={() => handleClickedAnswer(isCorrect, currentQuestion, id)}
                     on={on}
-                    buttonState={isTimeUp ? true : false}
+                    buttonState={isTimeUp || checkAnswers ? true : false}
+                    checkAnswers={checkAnswers}
+                    isCorrect={isCorrect}
                 >
                     {answerObj.answer}
                 </AnswerButton>

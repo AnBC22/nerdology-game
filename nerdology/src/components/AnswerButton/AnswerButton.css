@@ -4,6 +4,7 @@
   }
 
   .answer-button {
-    background-color: #0D47A1;
+    background-color: transparent;
     color: whitesmoke;
+    border: 1px solid white;
   }
