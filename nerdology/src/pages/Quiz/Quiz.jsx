@@ -1,14 +1,14 @@
 import React from 'react'
-import Button from '../components/Button/Button'
+import Button from '../../components/Button/Button'
 import { Link } from "react-router-dom"
-import AnswerButton from '../components/AnswerButton/AnswerButton'
-import GameOver from '../pages/GameOver/GameOver'
+import AnswerButton from '../../components/AnswerButton/AnswerButton'
+import './Quiz.css'
 
 export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
     const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(shuffledAnswers)
-    const [ isGameOver, setIsGameOver ] = React.useState(false)
+    const [ isTimeUp, setIsTimeUp ] = React.useState(false)
 
     const [ numberAnswers, setNumberAnswers ] = React.useState(0)
 
@@ -26,7 +26,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                     key={index}
                     clicked={() => handleClickedAnswer(isCorrect, currentQuestion, id)}
                     on={on}
-                    buttonState={isGameOver ? true : false}
+                    buttonState={isTimeUp ? true : false}
                 >
                     {answerObj.answer}
                 </AnswerButton>
@@ -130,7 +130,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             // If seconds reach 0, decrease minutes and reset seconds
             if (minutes === 0) {
                 console.log(`0 has been reached!`)
-                setIsGameOver(false) // CHANGE THIS TO TRUE WHEN NECESSARY
+                setIsTimeUp(true) // CHANGE THIS TO TRUE WHEN NECESSARY
                 clearInterval(timer); // Stop the timer when it reaches 0:00
                 return 0;
             }
@@ -139,7 +139,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             }
             return prevSeconds - 1;
         });
-        }, 30);
+        }, 80);
         // Cleanup function to clear interval when component unmounts
         return () => clearInterval(timer);
     }, [minutes]); // Re-run effect only when minutes change 
@@ -149,7 +149,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
         <>
             <h2>This is the Quiz</h2>
             <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
-            {isGameOver ? <GameOver/> : ''}
+            {isTimeUp ? <h2 className='main-title'>Time's up!</h2> : ''}
             {triviaDataHtml}
             {
                 checkAnswers ?
@@ -166,7 +166,9 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 <Button 
                     buttonAction={handleShowAnswers} 
                     buttonSize={'small'}
-                    buttonState={numberAnswers === updatedTriviaData.length ? false : true}
+                    buttonState={
+                        numberAnswers === updatedTriviaData.length || isTimeUp ? false : true
+                    }
                 >
                     Check answers
                 </Button>

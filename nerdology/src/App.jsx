@@ -5,7 +5,7 @@ import './App.css'
 import { nanoid } from 'nanoid'
 
 import StartPage from './pages/StartPage/StartPage'
-import Quiz from './pages/Quiz'
+import Quiz from './pages/Quiz/Quiz'
 import WaitingTime from './pages/WaitingTime'
 
 const triviaURL = 'https://opentdb.com/api.php?amount=3&difficulty=easy'
