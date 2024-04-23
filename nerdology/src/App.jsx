@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 import { nanoid } from 'nanoid'
+import {decode} from 'html-entities'
 
 import StartPage from './pages/StartPage/StartPage'
 import Quiz from './pages/Quiz/Quiz'
@@ -34,7 +35,7 @@ function App() {
         const dataWithIDs = data.results.map(questionObj => {
           const incorrectAnswersArray = questionObj.incorrect_answers.map((inc_answ) => (
             {
-              answer: inc_answ,
+              answer: decode(inc_answ),
               isCorrect: false,
               on: false,
               id: nanoid()
@@ -43,11 +44,11 @@ function App() {
 
           return (
             {
-              question: questionObj.question,
+              question: decode(questionObj.question),
               answers: [
                 ...incorrectAnswersArray,
                 {
-                  answer: questionObj.correct_answer,
+                  answer: decode(questionObj.correct_answer),
                   isCorrect: true,
                   on: false,
                   id: nanoid()
@@ -104,7 +105,7 @@ function App() {
   return (
     <BrowserRouter>
       <header>
-        <h3>Some links and additional info go here</h3>
+        <h3>Some links and additional info across pages go here</h3>
       </header>
       <Routes>
         <Route path="/" element={<StartPage />} />
