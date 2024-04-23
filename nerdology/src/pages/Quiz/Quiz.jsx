@@ -159,7 +159,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
 
     return ( //End of Quiz function
-        <>
+        <div id="quiz-container">
             <h2>This is the Quiz</h2>
             <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
             {isTimeUp ? <h2 className='main-title'>Time's up!</h2> : ''}
@@ -179,17 +179,18 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 </div>
                 
                 :
-
-                <Button 
-                    buttonAction={handleShowAnswers} 
-                    buttonSize={'small'}
-                    buttonState={
-                        numberAnswers === updatedTriviaData.length || isTimeUp ? false : true
-                    }
-                >
-                    Check answers
-                </Button>
+                <div id="check-answers">
+                    <Button 
+                        buttonAction={handleShowAnswers} 
+                        buttonSize={'small'}
+                        buttonState={
+                            numberAnswers === updatedTriviaData.length || isTimeUp ? false : true
+                        }
+                    >
+                        Check answers
+                    </Button>
+                </div>
             }
-        </> 
+        </div> 
     ) 
 }

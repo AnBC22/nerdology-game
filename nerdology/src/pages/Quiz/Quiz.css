@@ -1,6 +1,29 @@
+#quiz-container {
+    border: 1px solid yellow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .main-title {
     color: #FF6F00;
     text-align: center;
+}
+
+.answer-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#check-answers {
+    padding-top: 1.5em;
+    display: flex;
+    justify-content: center;
 }
 
 #results {
@@ -8,6 +31,6 @@
     align-items: center;
     justify-content: center;
     gap: 1.6em;
-    padding-top: 1em;
+    padding-top: 1.5em;
 }
 
