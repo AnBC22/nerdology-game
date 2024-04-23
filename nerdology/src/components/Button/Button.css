@@ -7,7 +7,6 @@ button {
 .action-button {
     background-color: #FF6F00;
     color: #FFFFFF;
-    margin-top: 2em;
 }
 
 .action-button:disabled {

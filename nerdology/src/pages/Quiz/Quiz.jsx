@@ -9,6 +9,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
     const [ checkAnswers, setCheckAnswers ] = React.useState(false)
     const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(shuffledAnswers)
     const [ isTimeUp, setIsTimeUp ] = React.useState(false)
+    const [ correctAnwersSelected, setCorrectAnswersSelected ] = React.useState(0)
 
     const [ numberAnswers, setNumberAnswers ] = React.useState(0)
 
@@ -111,9 +112,9 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
         })
 
         if(isCorrect) {
-            console.log('Congratulations')
+            console.log("correct answer!")
         } else {
-            console.log('Wrong answer')
+            console.log("wrong!")
         }
     }
 
@@ -141,7 +142,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             }
             return prevSeconds - 1;
         });
-        }, 80);
+        }, 500);
         // Cleanup function to clear interval when component unmounts
         return () => clearInterval(timer);
     }, [minutes]); // Re-run effect only when minutes change 
@@ -152,17 +153,22 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             <h2>This is the Quiz</h2>
             <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
             {isTimeUp ? <h2 className='main-title'>Time's up!</h2> : ''}
+            <h3>You scored {correctAnwersSelected} correct answers</h3>
             {triviaDataHtml}
             {
                 checkAnswers ?
-                <Link to='/waitingtime'>
-                    <Button 
-                        buttonAction={handleNewDataRequest} 
-                        buttonSize={'small'}
-                    >
-                        Play again
-                    </Button> 
-                </Link> 
+                <div id="results">
+                     
+                    <Link to='/waitingtime'>
+                        <Button 
+                            buttonAction={handleNewDataRequest} 
+                            buttonSize={'small'}
+                        >
+                            Play again
+                        </Button> 
+                    </Link>
+                </div>
+                
                 :
 
                 <Button 
