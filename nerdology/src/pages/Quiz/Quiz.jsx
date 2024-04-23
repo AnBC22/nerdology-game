@@ -10,7 +10,6 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
     const [ updatedTriviaData, setUpdatedTriviaData ] = React.useState(shuffledAnswers)
     const [ isTimeUp, setIsTimeUp ] = React.useState(false)
     const [ correctAnwersSelected, setCorrectAnswersSelected ] = React.useState(0)
-
     const [ numberAnswers, setNumberAnswers ] = React.useState(0)
 
     const triviaDataHtml = updatedTriviaData.map((questionObj, questionIndex) => {
@@ -123,6 +122,17 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
         setCheckAnswers(true)
     }
 
+    React.useEffect(() => {
+        const selectedAnswersArray = updatedTriviaData.map((questionObj) => {
+            return questionObj.answers.map(answerObj => {
+                if(answerObj.isCorrect && answerObj.on) {
+                    setCorrectAnswersSelected(prev => prev + 1)
+                }
+            })
+        })
+
+    }, [checkAnswers])
+
     const [minutes, setMinutes] = React.useState(1);
     const [seconds, setSeconds] = React.useState(0);
 
@@ -153,12 +163,11 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             <h2>This is the Quiz</h2>
             <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
             {isTimeUp ? <h2 className='main-title'>Time's up!</h2> : ''}
-            <h3>You scored {correctAnwersSelected} correct answers</h3>
             {triviaDataHtml}
             {
                 checkAnswers ?
                 <div id="results">
-                     
+                    <h3>You scored {correctAnwersSelected}/{updatedTriviaData.length} correct answers</h3>
                     <Link to='/waitingtime'>
                         <Button 
                             buttonAction={handleNewDataRequest} 
