@@ -105,7 +105,7 @@ function App() {
   return (
     <BrowserRouter>
       <header>
-        <h3>Some links and additional info across pages go here</h3>
+        {/* If necessary, I can add elements here that would show across all pages */}
       </header>
       <Routes>
         <Route path="/" element={<StartPage />} />

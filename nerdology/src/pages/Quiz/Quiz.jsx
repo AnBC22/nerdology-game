@@ -160,14 +160,15 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
     return ( //End of Quiz function
         <div id="quiz-container">
-            <h2>This is the Quiz</h2>
-            <h1>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
-            {isTimeUp ? <h2 className='main-title'>Time's up!</h2> : ''}
+            {
+                isTimeUp ? <h2 className='time-up'>Time's up!</h2> : 
+                <h1 className="time">{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
+            }
             {triviaDataHtml}
             {
                 checkAnswers ?
                 <div id="results">
-                    <h3>You scored {correctAnwersSelected}/{updatedTriviaData.length} correct answers</h3>
+                    <h3 className="score">You scored {correctAnwersSelected}/{updatedTriviaData.length} correct answers</h3>
                     <Link to='/waitingtime'>
                         <Button 
                             buttonAction={handleNewDataRequest} 

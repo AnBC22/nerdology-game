@@ -1,7 +1,7 @@
 button {
     border: none;
     color: #E0E0E0;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 
 .action-button {
@@ -15,5 +15,10 @@ button {
   }
 
 .button-small {
-    padding: 6px 12px;
+    padding: 0.8em 1.5em;
+}
+
+.button-big {
+  padding: 0.725em 3em;
+  font-size: 17px;
 }

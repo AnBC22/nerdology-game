@@ -1,3 +1,30 @@
+.container {
+    height: 100vh;
+    display: flex;
+}
+
+.container-inner {
+    margin: auto;
+    text-align: center;
+}
+
+.bot-img {
+    max-width: 200px;
+}
+
+.container-inner-text {
+    padding-top: 0.2em;
+}
+
+.container-inner-text h1 {
+    margin: 0 0 0.35em;
+}
+
+.container-inner-text p {
+    margin: 0 0 2.2em;
+}
+
 .title {
     color: #42A5F5;
+    font-family: "Orbitron", sans-serif;
 }
