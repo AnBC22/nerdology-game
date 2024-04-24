@@ -136,25 +136,31 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
     const [seconds, setSeconds] = React.useState(0);
 
     React.useEffect(() => {
+
         const timer = setInterval(() => {
-        setSeconds(prevSeconds => {
-            if (prevSeconds === 0) {
-            // If seconds reach 0, decrease minutes and reset seconds
-            if (minutes === 0) {
-                console.log(`0 has been reached!`)
-                setIsTimeUp(true) // CHANGE THIS TO TRUE WHEN NECESSARY
-                clearInterval(timer); // Stop the timer when it reaches 0:00
-                return 0;
+            if(!checkAnswers) {
+                setSeconds(prevSeconds => {
+                    if (prevSeconds === 0) {
+                        // If seconds reach 0, decrease minutes and reset seconds
+                        if (minutes === 0) {
+                            console.log(`0 has been reached!`)
+                            setIsTimeUp(true) // CHANGE THIS TO TRUE WHEN NECESSARY
+                            clearInterval(timer); // Stop the timer when it reaches 0:00
+                            return 0;
+                        }
+                        setMinutes(prevMinutes => prevMinutes - 1);
+                        return 59;
+                    }
+                    return prevSeconds - 1;
+                });
+            } else {
+                clearInterval(timer)
             }
-            setMinutes(prevMinutes => prevMinutes - 1);
-            return 59;
-            }
-            return prevSeconds - 1;
-        });
         }, 500);
+
         // Cleanup function to clear interval when component unmounts
         return () => clearInterval(timer);
-    }, [minutes]); // Re-run effect only when minutes change 
+    }, [minutes, checkAnswers]); // Re-run effect only when minutes change 
 
 
     return ( //End of Quiz function
