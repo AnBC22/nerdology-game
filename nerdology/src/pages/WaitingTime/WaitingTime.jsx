@@ -1,6 +1,7 @@
 import React from 'react'
-import Loading from '../assets/loading.svg'
+import Loading from '../../assets/loading.svg'
 import { useNavigate } from "react-router-dom"
+import './WaitingTime.css'
 
 export default function WaitingTime() {
 
@@ -31,10 +32,12 @@ export default function WaitingTime() {
     }, [])
 
     return (
-        <>
-            <h1>Please wait....</h1>
-            <h2>{count}</h2>
-            <img src={Loading} />
-        </>
+        <div id="container">
+            <div class="container-inner">
+                <h2>Please wait....</h2>
+                <h2>{count}</h2>
+                <img src={Loading} />
+            </div>
+        </div>
     )
 }

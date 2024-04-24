@@ -37,15 +37,14 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
         return (
             <div key={questionIndex}>
-                <h2>
+                <h3>
                     {questionObj.question}
-                </h2>
+                </h3>
                 <div className="answer-buttons-container">
                     {answerButtonComponents}
                 </div>
             </div>
         ) 
-        
     })
 
 
@@ -127,7 +126,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             return questionObj.answers.map(answerObj => {
                 if(answerObj.isCorrect && answerObj.on) {
                     setCorrectAnswersSelected(prev => prev + 1)
-                }
+                } 
             })
         })
 

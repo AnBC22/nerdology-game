@@ -8,18 +8,24 @@
     padding: 2em 1.5em;
 }
 
+.time,
+.time-up {
+    text-align: center;
+}
+
 .time {
     color: #42A5F5;
 }
 
 .time-up {
     color: #FF6F00;
-    text-align: center;
+    
 }
 
 .answer-buttons-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
 }
 
