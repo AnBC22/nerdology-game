@@ -6,3 +6,21 @@
 .container-inner {
     margin: auto;
 }
+
+.top {
+    font-size: 1.2rem;
+}
+
+.top h3 {
+    margin: 0;
+}
+
+.count {
+    color: #FF4081;
+    font-size: 2rem;
+}
+
+.loading-img {
+    max-width: 80px;
+    margin: 0 auto;
+}

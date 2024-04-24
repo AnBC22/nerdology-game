@@ -18,7 +18,7 @@ export default function WaitingTime() {
                     console.log("Reached 1")
 
                     setTimeout(() => {
-                        navigate("/quiz")
+                        // navigate("/quiz")
                     }, 100)
                     return 1
                 } 
@@ -34,9 +34,11 @@ export default function WaitingTime() {
     return (
         <div id="container">
             <div class="container-inner">
-                <h2>Please wait....</h2>
-                <h2>{count}</h2>
-                <img src={Loading} />
+                <div className="top">
+                    <h3 className="count">{count}</h3>
+                    <h3>Please wait...</h3>
+                </div>
+                <img className="loading-img" src={Loading} />
             </div>
         </div>
     )
