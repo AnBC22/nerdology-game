@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../../components/Button/Button'
 import { Link } from "react-router-dom"
 import AnswerButton from '../../components/AnswerButton/AnswerButton'
+import spinner from '../../assets/ripples.svg'
 import './Quiz.css'
 
 export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
@@ -166,8 +167,12 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
     return ( //End of Quiz function
         <div id="quiz-container">
             {
-                isTimeUp ? <h2 className='time-up'>Time's up!</h2> : 
-                <h1 className="time">{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h1>
+                isTimeUp ? <h2 className='time-up'>Time's up!</h2> :
+                <div className="timer-container">
+                    <div className={checkAnswers ? 'box' : 'box-absolute'}></div>
+                    <img src={checkAnswers ? '' : spinner} />
+                    <h2 className="time">{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h2>
+                </div> 
             }
             {triviaDataHtml}
             {

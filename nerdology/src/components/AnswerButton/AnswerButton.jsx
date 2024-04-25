@@ -15,6 +15,8 @@ export default function AnswerButton({
     }
 
     if(checkAnswers) {
+        styles.cursor = 'not-allowed';
+
         if(isCorrect) {
             styles.backgroundColor = '#1E88E5'
         } else if(on) {

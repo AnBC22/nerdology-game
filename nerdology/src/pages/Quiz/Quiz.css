@@ -8,6 +8,25 @@
     padding: 2em 1.5em;
 }
 
+.timer-container {
+    position: relative;
+    max-width: 175px;
+    margin-bottom: -25px;
+}
+
+.timer-container img {
+    max-width: 170px;
+}
+
+.box {
+    height: 169px;
+    width: 174px;
+}
+
+.box-absolute {
+    position: absolute;
+}
+
 .time,
 .time-up {
     text-align: center;
@@ -15,6 +34,10 @@
 
 .time {
     color: #42A5F5;
+    font-family: "Orbitron", sans-serif;
+    position: absolute;
+    top: 50px;
+    left: 52px;
 }
 
 .time-up {
@@ -46,3 +69,7 @@
 .score {
     color: #1E88E5;
 }
+
+
+
+
