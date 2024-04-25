@@ -30,6 +30,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                     buttonState={isTimeUp || checkAnswers ? true : false}
                     checkAnswers={checkAnswers}
                     isCorrect={isCorrect}
+                    isTimeUp={isTimeUp}
                 >
                     {answerObj.answer}
                 </AnswerButton>
@@ -133,8 +134,8 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
     }, [checkAnswers])
 
-    const [minutes, setMinutes] = React.useState(1);
-    const [seconds, setSeconds] = React.useState(0);
+    const [minutes, setMinutes] = React.useState(0);
+    const [seconds, setSeconds] = React.useState(35);
 
     React.useEffect(() => {
 

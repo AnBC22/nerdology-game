@@ -7,11 +7,16 @@ export default function AnswerButton({
     on, 
     buttonState, 
     checkAnswers, 
-    isCorrect }){
+    isCorrect,
+    isTimeUp }){
         
 
     const styles = {
         backgroundColor: ''
+    }
+
+    if(isTimeUp) {
+        styles.cursor = 'not-allowed';
     }
 
     if(checkAnswers) {
