@@ -33,7 +33,7 @@ export default function WaitingTime() {
 
     return (
         <div id="container">
-            <div class="container-inner">
+            <div className="container-inner">
                 <h3 className="count">{count}</h3>
                 <div className="bottom">
                     <h3 className='title'>Please wait</h3>

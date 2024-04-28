@@ -3,6 +3,8 @@ import Button from '../../components/Button/Button'
 import { Link } from "react-router-dom"
 import AnswerButton from '../../components/AnswerButton/AnswerButton'
 import spinner from '../../assets/ripples.svg'
+import winnerImg from '../../assets/bot-winner.png'
+import Confetti from 'react-confetti'
 import './Quiz.css'
 
 export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
@@ -85,7 +87,6 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                             ...questionObj,
                             answers: questionObj.answers.map(answer => {
                                 if(answer.id === id) {
-                                    console.log(`${answer.answer} was clicked!`)
                                     return (
                                         {
                                             ...answer,
@@ -131,11 +132,10 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 } 
             })
         })
-
     }, [checkAnswers])
 
     const [minutes, setMinutes] = React.useState(0);
-    const [seconds, setSeconds] = React.useState(35);
+    const [seconds, setSeconds] = React.useState(59);
 
     React.useEffect(() => {
 
@@ -158,37 +158,62 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
             } else {
                 clearInterval(timer)
             }
-        }, 500);
+        }, 1000);
 
         // Cleanup function to clear interval when component unmounts
         return () => clearInterval(timer);
     }, [minutes, checkAnswers]); // Re-run effect only when minutes change 
 
 
+    const [ wantsCloseModal, setWantsCloseModal ] = React.useState(false)
+    function closeModal() {
+        console.log("close the modal")
+        setWantsCloseModal(true)
+    }
+
+
     return ( //End of Quiz function
         <div id="quiz-container">
             {
-                isTimeUp ? <h2 className='time-up'>Time's up!</h2> :
+                isTimeUp ? <h3 className='time-up'>Time's up!</h3> :
                 <div className="timer-container">
                     <div className={checkAnswers ? 'box' : 'box-absolute'}></div>
                     <img src={checkAnswers ? '' : spinner} />
-                    <h2 className="time">{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h2>
+                    <h2 className={checkAnswers ? 'time time-stopped' : 'time'}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</h2>
                 </div> 
             }
             {triviaDataHtml}
             {
                 checkAnswers ?
-                <div id="results">
-                    <h3 className="score">You scored {correctAnwersSelected}/{updatedTriviaData.length} correct answers</h3>
-                    <Link to='/waitingtime'>
-                        <Button 
-                            buttonAction={handleNewDataRequest} 
-                            buttonSize={'small'}
-                        >
-                            Play again
-                        </Button> 
-                    </Link>
-                </div>
+                <>
+                    {
+                        correctAnwersSelected === updatedTriviaData.length && 
+                        <div>
+                            <Confetti/>
+                            <div className={wantsCloseModal ? 'modal modal-hidden' : 'modal'}>
+                                <div className="close-modal-btn-container">
+                                    <button onClick={() => closeModal()} className="modal-close-btn" id="modal-close-btn">X</button>
+                                </div>
+                                <div className="modal-inner" id="modal-inner">
+                                    <h3>You're a true knowledge bot!</h3>
+                                    <img src={winnerImg} className='bot-img'/>
+                                    <p>(This is you)</p>
+                                </div>
+                            </div>
+                        </div> 
+                    }
+                    <div id="results">
+                        <h3 className="score">You scored {correctAnwersSelected}/{updatedTriviaData.length} correct answers</h3>
+                        <Link to='/waitingtime'>
+                            <Button 
+                                buttonAction={handleNewDataRequest} 
+                                buttonSize={'small'}
+                            >
+                                Play again
+                            </Button> 
+                        </Link>
+                    </div>
+                </>
                 
                 :
                 <div id="check-answers">
