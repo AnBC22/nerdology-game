@@ -18,10 +18,12 @@
 
 .container-inner-text h1 {
     margin: 0 0 0.35em;
+    font-size: 2.1rem;
 }
 
 .container-inner-text p {
     margin: 0 0 2.2em;
+    color: #64B5F6;
 }
 
 .title {

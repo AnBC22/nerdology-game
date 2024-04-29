@@ -30,7 +30,6 @@ export default function AnswerButton({
             styles.backgroundColor = ''
         }
     } else if(on) {
-        // styles.backgroundColor = '#555555'
         styles.backgroundColor = '#64B5F6'
         styles.color= '#333333'
     } else {
