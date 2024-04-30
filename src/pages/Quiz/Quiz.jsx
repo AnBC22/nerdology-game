@@ -40,8 +40,8 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
         })
 
         return (
-            <div key={questionIndex}>
-                <h4>
+            <div key={questionIndex} className="question-container">
+                <h4 className="question">
                     {questionObj.question}
                 </h4>
                 <div className="answer-buttons-container">
@@ -183,11 +183,12 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 </div> 
             }
             {triviaDataHtml}
+            {/* correctAnwersSelected === updatedTriviaData.length &&  */}
             {
                 checkAnswers ?
                 <>
                     {
-                        correctAnwersSelected === updatedTriviaData.length && 
+                        correctAnwersSelected < 15 && 
                         <div>
                             <Confetti/>
                             <div className={wantsCloseModal ? 'modal modal-hidden' : 'modal'}>
