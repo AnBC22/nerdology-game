@@ -23,6 +23,10 @@
     margin: 0 0 0.15em;
 }
 
+.waiting-text {
+    font-size: 1.25rem;
+}
+
 .loading-img {
     max-width: 30px;
     margin: 0 auto;

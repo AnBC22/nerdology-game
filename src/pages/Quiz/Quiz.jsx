@@ -41,9 +41,9 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
         return (
             <div key={questionIndex}>
-                <h3>
+                <h4>
                     {questionObj.question}
-                </h3>
+                </h4>
                 <div className="answer-buttons-container">
                     {answerButtonComponents}
                 </div>
@@ -196,14 +196,14 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                                 </div>
                                 <div className="modal-inner" id="modal-inner">
                                     <h3>You're a true knowledge bot!</h3>
-                                    <img src={winnerImg} className='bot-img'/>
+                                    <img src={winnerImg} className='bot-img bot-winner'/>
                                     <p>(This is you)</p>
                                 </div>
                             </div>
                         </div> 
                     }
                     <div id="results">
-                        <h3 className="score">You scored {correctAnwersSelected}/{updatedTriviaData.length} correct answers</h3>
+                        <h4 className="score">You scored {correctAnwersSelected}/{updatedTriviaData.length} correct answers</h4>
                         <Link to='/waitingtime'>
                             <Button 
                                 buttonAction={handleNewDataRequest} 

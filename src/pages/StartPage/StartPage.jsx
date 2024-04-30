@@ -11,7 +11,7 @@ export default function StartPage({handleStartGame}) {
       <div className="container-inner">
         <img className="bot-img" src={botImg} />
         <div className="container-inner-text">
-          <h1 className='title'>Nerdology</h1>
+          <h1 className='title'><span className="big-letter">N</span>erdology</h1>
           <p>Test if you're a knowledge bot!</p>
         </div>
         <Link to='/quiz'>

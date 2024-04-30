@@ -5,7 +5,7 @@ import './WaitingTime.css'
 
 export default function WaitingTime() {
 
-    const [ count, setCount ] = React.useState(5)
+    const [ count, setCount ] = React.useState(3)
 
     const navigate = useNavigate()
 
@@ -15,8 +15,6 @@ export default function WaitingTime() {
             setCount(prev => {
                 if(prev === 1) {
                     clearInterval(interval)
-                    console.log("Reached 1")
-
                     setTimeout(() => {
                         navigate("/quiz")
                     }, 100)
@@ -36,7 +34,7 @@ export default function WaitingTime() {
             <div className="container-inner">
                 <h3 className="count">{count}</h3>
                 <div className="bottom">
-                    <h3 className='title'>Please wait</h3>
+                    <h3 className='title waiting-text'>Please wait</h3>
                     <img className="loading-img" src={Loading} />
                 </div>
             </div>

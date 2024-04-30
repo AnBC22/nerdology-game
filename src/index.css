@@ -54,7 +54,9 @@ article ul {
     background-color: #141414;
     color: #E0E0E0;
     margin: 0;
-    font-family: "Roboto", sans-serif;;
+    font-family: "Roboto", sans-serif;
+    background: url('./assets/background.jpeg');
+    background-size: cover;
   }
 
  /* FONTS */

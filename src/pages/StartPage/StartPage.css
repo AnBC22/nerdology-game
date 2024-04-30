@@ -6,27 +6,33 @@
 .container-inner {
     margin: auto;
     text-align: center;
+    position: relative;
 }
 
 .bot-img {
-    max-width: 200px;
+    max-width: 175px;
+    position: absolute;
+    bottom: 155px;
+    left: 58px;
 }
 
 .container-inner-text {
     padding-top: 0.2em;
 }
 
-.container-inner-text h1 {
+.title {
     margin: 0 0 0.35em;
     font-size: 2.1rem;
+    color: #42A5F5;
+    font-family: "Orbitron", sans-serif;
+}
+
+.big-letter {
+    font-size: 2.7rem;
 }
 
 .container-inner-text p {
     margin: 0 0 2.2em;
-    color: #64B5F6;
+    color: #8AC6FF;
 }
 
-.title {
-    color: #42A5F5;
-    font-family: "Orbitron", sans-serif;
-}

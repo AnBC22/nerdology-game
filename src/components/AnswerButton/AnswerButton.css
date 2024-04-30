@@ -3,4 +3,10 @@
     color: whitesmoke;
     border: 1px solid white;
     padding: 0.3em 0.8em;
+    font-size: 0.65625em;
+    padding: 8px 20px;
+  }
+
+  .answer-button:disabled {
+    background-color: #222222;
   }
