@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
 import { nanoid } from 'nanoid'
 import {decode} from 'html-entities'
-
 import StartPage from './pages/StartPage/StartPage'
 import Quiz from './pages/Quiz/Quiz'
 import WaitingTime from './pages/WaitingTime/WaitingTime'
+import './App.css'
 
 const triviaURL = 'https://opentdb.com/api.php?amount=5&difficulty=easy'
 

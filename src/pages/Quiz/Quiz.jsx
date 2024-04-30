@@ -111,16 +111,9 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 }
             })
         })
-
-        if(isCorrect) {
-            console.log("correct answer!")
-        } else {
-            console.log("wrong!")
-        }
     }
 
     function handleShowAnswers() {
-        console.log("Show answers")
         setCheckAnswers(true)
     }
 
@@ -145,8 +138,7 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                     if (prevSeconds === 0) {
                         // If seconds reach 0, decrease minutes and reset seconds
                         if (minutes === 0) {
-                            console.log(`0 has been reached!`)
-                            setIsTimeUp(true) // CHANGE THIS TO TRUE WHEN NECESSARY
+                            setIsTimeUp(true) 
                             clearInterval(timer); // Stop the timer when it reaches 0:00
                             return 0;
                         }
@@ -167,7 +159,6 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
 
     const [ wantsCloseModal, setWantsCloseModal ] = React.useState(false)
     function closeModal() {
-        console.log("close the modal")
         setWantsCloseModal(true)
     }
 
@@ -183,12 +174,12 @@ export default function Quiz({ shuffledAnswers, handleNewDataRequest }) {
                 </div> 
             }
             {triviaDataHtml}
-            {/* correctAnwersSelected === updatedTriviaData.length &&  */}
+          
             {
                 checkAnswers ?
                 <>
                     {
-                        correctAnwersSelected < 15 && 
+                        correctAnwersSelected === updatedTriviaData.length &&
                         <div>
                             <Confetti/>
                             <div className={wantsCloseModal ? 'modal modal-hidden' : 'modal'}>
